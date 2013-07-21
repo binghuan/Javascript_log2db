@@ -1,47 +1,27 @@
 
+var databaseName = "logDatabase";
+
 
 $('document').ready(function() {
 	console.info("ui is ready !!");
 	$('#tryLogMsg').click(function() {
-		console.info('ready to log text:' + document.getElementById('buttonLogMsg').value);
+		console.log('ready to log text:' + document.getElementById('buttonLogMsg').value);
 		log2db.log.d(document.getElementById('buttonLogMsg').value);
 	});
 
 	$('#dumpLog').click(function() {
-		console.info('ready to dump log');
+		console.log('ready to dump log');
 		log2db.dumpDataFromTable(loadAllLogText);
+	});
+
+	$('#deleteDB').click(function() {
+		console.log('ready to delete logDatabase');
+		log2db.deleteDatabase(databaseName);
 	});
 });
 
-var db ;
 
-function createDBandTable() {
 
-		try {
-			if (!window.openDatabase) {
-			alert('not supported');
-			} else {
-				var shortName = 'mydatabase';
-		      var version = '1.0';
-		      var displayName = 'My Important Database';
-		      var maxSize = 65536; // in bytes
-		      db = openDatabase(shortName, version, displayName, maxSize);
-		      createTables(db);
-		      // You should have a database instance in db.
-			}
-		} catch(e) {
-			      // Error handling code goes here.
-			      if (e == 2) {
-			          // Version number mismatch.
-			          console.error("Invalid database version.");
-			      } else {
-			          console.error("Unknown error "+e+".");
-			      }
-
-				return; 
-		}
-
-}
 
 // function to dump log to file.
 function loadAllLogText(transaction, result) {
@@ -68,50 +48,5 @@ function getAllLogs(extractFunc) {
 	log2db.dumpDataFromTable(extractFunc);
 }
 
-function createTables(db) {
-	db.transaction(
-	function (transaction) {
-		dbTransaction = transaction;
-		//create table if not exists TableName (col1 typ1, ..., colN typN)
-              /* The first query causes the transaction to (intentionally) fail if the table exists. */
-		transaction.executeSql('CREATE TABLE IF NOT EXISTS ' + tableName + '(message TEXT);', [], nullDataHandler, errorHandler);
-	              /* These insertions will be skipped if the table already exists. */
-		//transaction.executeSql('insert into people (name, shirt) VALUES ("Joe", "Green");', [], nullDataHandler, errorHandler);
-		//transaction.executeSql('insert into ' + tableName + ' (message) VALUES ("This is fire line log");', [], nullDataHandler, errorHandler);
-
-	} );
-}
-
-var sqlString = "";
-var tableName = "logTable";
-function log2Database(msg) {
-	sqlString = 'insert into logTable (message) VALUES ("' + msg + '");'
-
-	db.transaction( function (transaction) {
-		transaction.executeSql(sqlString, [], nullDataHandler, errorHandler);
-	});
-}
-
-function errorHandler(transaction, error)
-  {
-      // error.message is a human-readable string.
-      // error.code is a numeric error code
-      alert('Oops.  Error was '+error.message+' (Code '+error.code+')');
-      // Handle errors here
-      var we_think_this_error_is_fatal = true;
-      if (we_think_this_error_is_fatal) return true;
-      return false;
-}
-
-function nullDataHandler(transaction, results) { 
-
-}
-
-
-//createDBandTable();	
-//console.log("Database is: "+db);
 console.log("setp 1");
-log2db.openDB("db2");
-console.log("setp 2");
-log2db.createTable("table2");
-console.log("setp 3");
+log2db.openDatabase("logDatabase");
