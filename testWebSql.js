@@ -29,14 +29,14 @@ function loadAllLogText(transaction, result) {
 	var bb = new BlobBuilder();
 	console.log('+ loadAllLogText');
 	var rowOutput = "";
-        var todoItems = document.getElementById("todoItems");
+    var todoItems = document.getElementById("todoItems");
 
-        console.log("loadAllLogText -- start");
+    console.log("loadAllLogText -- start");
 
-        for (var i=0; i < result.rows.length; i++) {
-          console.log(result.rows.item(i).message);
-          bb.append(result.rows.item(i).message + "\n");
-        }
+    for (var i=0; i < result.rows.length; i++) {
+      console.log(result.rows.item(i).message);
+      bb.append(result.rows.item(i).message + "\n");
+    }
 	console.log("loadAllLogText -- end");
 	var blob = bb.getBlob("text/plain;charset=" + document.characterSet);
 	saveAs( blob, "log.txt");
