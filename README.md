@@ -7,3 +7,6 @@ record the log message into web database.
 	already support indexedDB and WebSqlDB
 
 powered by bh_lin.
+
+<p>Other solution: </p>
+<a href="https://github.com/mozilla/localForage">https://github.com/mozilla/localForage</a>
