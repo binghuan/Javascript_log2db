@@ -1,5 +1,11 @@
 # Javascript_log2db
 
+## Feature overview
+
+![Javascript_log2db — feature flow diagram](README-assets/project-preview.svg)
+
+Conceptual feature flow based on this repository; this is a documentation diagram, not an application screenshot.
+
 A JavaScript library for recording log messages into web databases with support for both IndexedDB and WebSQL.
 
 ## Features
